@@ -473,7 +473,7 @@ echo
 
 echo " 1 - MEMÓRIA"
 echo " 2 - CPU"
-echo " 3 - PROCESSOS"
+echo " 3 - PROCESSOS E SERVIÇOS"
 echo
 
 read OP4
@@ -492,7 +492,141 @@ case $OP4 in
 
 	3) clear
 		
-		htop
+		echo "1 - Processos em tempo real"
+		echo "2 - Processos e seus respectivos PID em árvore"
+		echo "3 - Consultar um Processo específico"
+		echo "4 - Consultar processos inicializados por um usuário específico"
+		echo "5 - Fechar um processo e/ou suas threads"
+		echo "6 - Serviços em running"
+		
+		echo
+		
+		read OP5
+
+		if [ $OP5 = 1 ]; 
+			then
+
+				htop
+		
+		elif [ $OP5 = 2 ];
+			then
+				clear
+				pstree -Tp
+				echo
+		    	echo
+		    	echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione ENTER para retornar ao menu PRINCIPAL"	
+		    	echo
+		    	echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tOu"
+		    	echo 
+		    	echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
+		    	read
+
+				
+		elif [ $OP5 = 3 ];
+		    then
+		    	 clear
+		    	 echo "Digite o PID ou nome do processo que deseja consultar"
+		    	 echo
+		    	 read NOMEPROCESSO
+		    	 echo
+				 		
+				 ps aux | egrep -i "$NOMEPROCESSO"
+		    	 
+		    	 echo
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione ENTER para retornar ao menu PRINCIPAL"	
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tOu"
+		    	 echo 
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
+		    	 read
+		
+		elif [ $OP5 = 4 ];
+		    then
+		    	 clear
+		    	 echo "Digite o nome do USUÁRIO: "
+		    	 echo
+		    	 read NOMEUSER
+		    	 echo
+				 		
+				 clear
+				 htop -u $NOMEUSER
+		    	 
+		elif [ $OP5 = 5 ];
+		    then
+		    	 clear
+		    	 
+		    	 echo "1 - Encerrar somente um processo e/ou thread"
+		    	 echo "2 - Encerrar todos os processos em execução"
+		    	 echo
+		    	 read OP6
+		    	 echo
+
+		    	 case $OP6 in
+
+		    	 1)
+	
+		    	 echo "Digite o numero do PID do processo ou thread que deseja encerrar"
+		    	 echo
+		    	 read PIDKILL
+		    	 echo
+				 		
+				 kill -9 $PIDKILL
+
+				 clear
+				 echo "O processo foi encerrado como solicitado."
+		    	 
+		    	 echo
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione ENTER para retornar ao menu PRINCIPAL"	
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tOu"
+		    	 echo 
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
+		    	 read
+		    	 clear
+		    	 ;;
+
+		    	 2)
+
+		    	 echo "Digite o nome do processo que deseja encerrar"
+		    	 echo
+		    	 read PIDKILLALL
+		    	 echo
+				 		
+				 killall $PIDKILLALL
+
+				 clear
+				 echo "O processo foi encerrado como solicitado."
+		    	 
+		    	 echo
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione ENTER para retornar ao menu PRINCIPAL"	
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tOu"
+		    	 echo 
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
+		    	 read
+		    	 clear
+		    	 ;;
+				
+				esac
+
+		
+		elif [ $OP5 = 6 ];
+		    then
+		    	 clear
+		    	 systemctl list-units *.service | grep -e running -e UNIT
+		    	 echo
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione ENTER para retornar ao menu PRINCIPAL"	
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tOu"
+		    	 echo 
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
+		    	 read
+
+		fi
 		;;
 
 	*) clear
@@ -551,3 +685,5 @@ fi
 
 
 done
+
+
