@@ -16,12 +16,10 @@ RESOLV="`cat /etc/resolv.conf | grep "domain " | awk '{print $2}'`"
 GWPADRAO="`route -n | head -3 | grep 0.0 | awk '{print $2}'`"
 INTERFACESREL="`ifconfig -a | egrep "*: flags" | awk '{print $1}' | tr -d :`"
 
-#################################################################### SERVIDOR
+#################################################################### OUTROS
 NOMECPU="`grep "model name" /proc/cpuinfo | tail -1 | cut -d: -f2`"
 QTDCPU="`grep "cpu cores" /proc/cpuinfo | tail -1 | awk '{print $4}'`"
 PROCESSEX="`ps aux | wc -l`"
-PARTICOES="$(df -hT | grep -ve tmp -ve loop)"
-INFOHD="$(smartctl -i /dev/sda | grep -e "Local Time is" -e "SATA" -e "ATA" -e "Sector Sizes" -e "User Capacity" -e  "Model Family" -e "Device Model" -e "Serial Number")"
 
 # FUNÇÕES
 function FUNCAOINFOR {
@@ -35,9 +33,9 @@ function FUNCAOINFOR {
 |___|_| \_|_|   |_| \_\/_/   \_/
           	"
 			echo "==================================================================================="
-			echo "HOSTNAME: `hostname` " 
-			echo "IP: MEUIP"
-			echo "GW: $GWPADRAO/24"            
+			echo "Host --------------------------- `hostname` " 
+			echo "IP -----------------------------  $MEUIP"
+			echo "GW -----------------------------  $GWPADRAO/24"            
 			echo "==================================================================================="
 			echo "Interfaces:"
 			echo
@@ -52,25 +50,6 @@ function FUNCAOINFOR1 {
    echo -e " CPU:$NOMECPU" "$QTDCPU Núcleos"
    echo " $PROCESSEX Processos em execução."
 }
-
-
-function FUNCAOINFOR2 {
-
-	echo -e "\t\tInformações do dispositivo de armazenamento"
-	echo
-	echo -e "$INFOHD"
-	echo
-	echo
-	echo -e "\t\tPartições montadas no sistema"
-	echo 
-	echo -e "$PARTICOES"
-
-}
-
-
-
-
-
 
 
 # CONDIÇÃO DE USUÀRIO ROOT USANDO O IF
@@ -494,9 +473,7 @@ echo
 
 echo " 1 - MEMÓRIA"
 echo " 2 - CPU"
-echo " 3 - PROCESSOS"
-echo " 4 - DISCO"
-
+echo " 3 - PROCESSOS E SERVIÇOS"
 echo
 
 read OP4
@@ -515,65 +492,142 @@ case $OP4 in
 
 	3) clear
 		
-		htop
-		;;
-
-	4) clear
-		
-		FUNCAOINFOR2
+		echo "1 - Processos em tempo real"
+		echo "2 - Processos e seus respectivos PID em árvore"
+		echo "3 - Consultar um Processo específico"
+		echo "4 - Consultar processos inicializados por um usuário específico"
+		echo "5 - Fechar um processo e/ou suas threads"
+		echo "6 - Serviços em running"
 		
 		echo
-		echo
 		
-		echo "1 - SAÚDE DO HD"
-		echo "2 - VERIFICAR PARTIÇÃO"
-		echo
 		read OP5
 
-		case $OP5 in
+		if [ $OP5 = 1 ]; 
+			then
 
-			1) clear
-			   echo "Informe o dispositivo (Ex: /dev/sda):"
-			   echo
-			   read SELECTDISP
-			   echo
-			   smartctl -H $SELECTDISP
-			   read
-			   clear
-			   ;;
+				htop
+		
+		elif [ $OP5 = 2 ];
+			then
+				clear
+				pstree -Tp
+				echo
+		    	echo
+		    	echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione ENTER para retornar ao menu PRINCIPAL"	
+		    	echo
+		    	echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tOu"
+		    	echo 
+		    	echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
+		    	read
 
-			2) clear
-			   echo "Informe a partição que deseja verificar (Ex: /dev/sda2):"
-			   echo
-			   read SELECTPART
-			   echo
-			   echo "
+				
+		elif [ $OP5 = 3 ];
+		    then
+		    	 clear
+		    	 echo "Digite o PID ou nome do processo que deseja consultar"
+		    	 echo
+		    	 read NOMEPROCESSO
+		    	 echo
+				 		
+				 ps aux | egrep -i "$NOMEPROCESSO"
+		    	 
+		    	 echo
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione ENTER para retornar ao menu PRINCIPAL"	
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tOu"
+		    	 echo 
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
+		    	 read
+		
+		elif [ $OP5 = 4 ];
+		    then
+		    	 clear
+		    	 echo "Digite o nome do USUÁRIO: "
+		    	 echo
+		    	 read NOMEUSER
+		    	 echo
+				 		
+				 clear
+				 htop -u $NOMEUSER
+		    	 
+		elif [ $OP5 = 5 ];
+		    then
+		    	 clear
+		    	 
+		    	 echo "1 - Encerrar somente um processo e/ou thread"
+		    	 echo "2 - Encerrar todos os processos em execução"
+		    	 echo
+		    	 read OP6
+		    	 echo
 
-Código de erros prováveis
+		    	 case $OP6 in
 
-• 0: Nenhum erro
-• 1: Erros encontrados e corrigidos
-• 2: O sistema deve ser reiniciado
-• 4: Erros encontrados e deixados sem correção
-• 8: Erro operacional
-• 16 : Erro de uso ou sintaxe
-• 128 : Erro de biblioteca compartilhada
+		    	 1)
+	
+		    	 echo "Digite o numero do PID do processo ou thread que deseja encerrar"
+		    	 echo
+		    	 read PIDKILL
+		    	 echo
+				 		
+				 kill -9 $PIDKILL
 
+				 clear
+				 echo "O processo foi encerrado como solicitado."
+		    	 
+		    	 echo
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione ENTER para retornar ao menu PRINCIPAL"	
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tOu"
+		    	 echo 
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
+		    	 read
+		    	 clear
+		    	 ;;
 
-"
-			   fsck -y $SELECTPART
-			   echo
-			   echo "Verificação finalizada!"
-			   echo
-			   echo -e "\t\t\t\tpressione ENTER para SAIR"
-			   read
-			   echo
-			   clear
-			   ;;
-		esac 
+		    	 2)
 
+		    	 echo "Digite o nome do processo que deseja encerrar"
+		    	 echo
+		    	 read PIDKILLALL
+		    	 echo
+				 		
+				 killall $PIDKILLALL
 
-	;;
+				 clear
+				 echo "O processo foi encerrado como solicitado."
+		    	 
+		    	 echo
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione ENTER para retornar ao menu PRINCIPAL"	
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tOu"
+		    	 echo 
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
+		    	 read
+		    	 clear
+		    	 ;;
+				
+				esac
+
+		
+		elif [ $OP5 = 6 ];
+		    then
+		    	 clear
+		    	 systemctl list-units *.service | grep -e running -e UNIT
+		    	 echo
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione ENTER para retornar ao menu PRINCIPAL"	
+		    	 echo
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tOu"
+		    	 echo 
+		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
+		    	 read
+
+		fi
+		;;
 
 	*) clear
 
