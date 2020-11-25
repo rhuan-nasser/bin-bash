@@ -1,0 +1,542 @@
+while :; 
+
+do
+
+
+
+clear
+# Script de backup
+
+
+######################################################### Variáveis
+DATA=$(date +%Y%m%d)
+
+######################################################### FUNÇÕES
+
+function INFO {
+
+echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tTamanho de cada diretório:"
+echo
+echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t/home: `du -sh /home | awk '{print $1}'`"
+echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t/etc: `du -sh /etc | awk '{print $1}'`"
+echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t/var: `du -sh /var | awk '{print $1}'`"
+echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t/usr: `du -sh /usr | awk '{print $1}'`"
+
+} 
+
+
+INFO
+
+echo " 
+ _       _            
+| |__   | | __  _ __  
+| '_ \  | |/ / | '_ \ 
+| |_) | |   <  | |_) |
+|_.__/  |_|\_\ | .__/ 
+               |_|    
+               "
+
+echo "Selecione uma das opções abaixo: "
+
+echo
+echo
+
+echo "1) /home"
+echo "2) /etc"
+echo "3) /var"
+echo "4) /usr"
+echo "5) Escolha o diretório que deseja backupear "
+
+
+echo
+echo
+
+echo "Para sair pressione CTRL + C"
+
+
+
+echo
+
+read OP
+
+echo "    		Informe o caminha absoluto do local em que deseja"
+echo "    		salvar o arquivo (Ex: /opt/backups): "
+
+echo 
+
+read DIR_DEST
+
+
+# INÍCIO DO CASE OP
+
+case $OP in ##### >>>1 
+
+	#/home
+
+	1)
+	
+	
+
+	echo "Selecione o compactador: "
+	
+	echo 
+	
+	echo "1 - gz"
+	echo "2 - bzip2"
+	echo "3 - xz"	
+	
+	echo
+
+	read OP_COMP
+
+		# INÍCIO DO CASE OP_COMP
+		case $OP_COMP in
+
+	
+			1)
+		
+			tar -zcvf $DIR_DEST/bkp_$DATA.gz /home
+
+			echo
+			echo
+			
+			echo "Backup Realizado!"
+			sleep 3
+			echo
+			echo
+
+			echo "Verifique o $DIR_DEST/bkp_$DATA.gz"
+			sleep 7
+			;;
+
+
+			2)
+
+			
+		
+			tar -jcvf $DIR_DEST/bkp_$DATA.bzip2 /home
+
+			echo
+			echo
+
+			echo "Backup Realizado!"
+			sleep 3
+			echo
+			echo
+
+			echo "Verifique o $DIR_DEST/bkp_$DATA.bzip2"
+			sleep 7
+			;;
+
+		
+			3)
+
+			
+		
+			tar -Jcvf $DIR_DEST/bkp_$DATA.xz /home
+
+			echo
+			echo
+
+			echo "Backup Realizado!"
+			sleep 3
+			echo
+			echo
+
+			echo "Verifique o $DIR_DEST/bkp_$DATA.xz"
+			sleep 7
+			;;
+
+		
+		esac
+
+	;;
+
+
+	
+
+
+
+
+
+
+
+
+	#/etc
+
+	2)
+	
+	
+
+	echo "Selecione o compactador: "
+	
+	echo 
+	
+	echo "1 - gz"
+	echo "2 - bzip2"
+	echo "3 - xz"	
+	
+	echo
+
+	read OP_COMP
+
+			# INÍCIO DO CASE OP_COMP
+				case $OP_COMP in
+
+			1)
+
+			
+		
+			tar -zcvf $DIR_DEST/bkp_$DATA.gz /etc
+
+			echo
+			echo
+
+			echo "Backup Realizado!"
+			sleep 3
+			echo
+			echo
+
+			echo "Verifique o $DIR_DEST/bkp_$DATA.gz"
+			sleep 7
+			;;
+
+
+			2)
+
+			
+		
+			tar -jcvf $DIR_DEST/bkp_$DATA.bzip2 /etc
+
+			echo
+			echo
+
+			echo "Backup Realizado!"
+			sleep 3
+			echo
+			echo
+			
+			echo "Verifique o $DIR_DEST/bkp_$DATA.bzip2"
+			sleep 7
+			;;
+
+		
+			3)
+
+		   		
+			tar -Jcvf $DIR_DEST/bkp_$DATA.xz /etc
+
+			echo
+			echo
+
+			echo "Backup Realizado!"
+			sleep 3
+			echo
+			echo
+
+			echo "Verifique o $DIR_DEST/bkp_$DATA.xz"
+			sleep 7
+			echo
+			echo
+
+			
+			;;
+	
+			esac
+
+	;;
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+	#/var
+
+	3)
+
+	
+
+	echo "Selecione o compactador: "
+	
+	echo 
+	
+	echo "1 - gz"
+	echo "2 - bzip2"
+	echo "3 - xz"	
+	
+	echo
+
+	read OP_COMP
+
+	# INÍCIO DO CASE OP_COMP
+	case $OP_COMP in
+
+		1)
+
+		
+		
+		tar -zcvf $DIR_DEST/bkp_$DATA.gz /var
+
+		echo
+		echo
+		
+		echo "Backup Realizado!"
+		sleep 3
+		echo
+		echo
+		
+		echo "Verifique o $DIR_DEST/bkp_$DATA.gz"
+		sleep 7
+		;;
+
+
+		2)
+
+		
+		
+		tar -jcvf $DIR_DEST/bkp_$DATA.bzip2 /var
+
+		echo
+		echo
+
+		echo "Backup Realizado!"
+		sleep 3
+		echo
+		echo
+
+		echo "Verifique o $DIR_DEST/bkp_$DATA.bzip2"
+		sleep 7
+		;;
+
+		
+		3)
+
+		
+		
+		tar -Jcvf $DIR_DEST/bkp_$DATA.xz /var
+
+		echo
+		echo
+
+		echo "Backup Realizado!"
+		sleep 3
+		echo
+		echo
+
+		echo "Verifique o $DIR_DEST/bkp_$DATA.xz"
+		sleep 7
+		;;
+
+	esac
+
+	;;
+
+
+	
+
+
+
+
+
+
+
+
+
+
+	#/usr
+
+	4)
+	
+	
+
+	echo "Selecione o compactador: "
+	
+	echo 
+	
+	echo "1 - gz"
+	echo "2 - bzip2"
+	echo "3 - xz"	
+	
+	echo
+
+	read OP_COMP
+
+	# INÍCIO DO CASE OP_COMP
+	case $OP_COMP in
+
+		1)
+
+		
+		
+		tar -zcvf $DIR_DEST/bkp_$DATA.gz /usr
+
+		echo
+		echo
+
+		echo "Backup Realizado!"
+		sleep 3
+		echo
+		echo
+
+		echo "Verifique o $DIR_DEST/bkp_$DATA.gz"
+		sleep 7
+		;;
+
+
+		2)
+
+		
+		
+		tar -jcvf $DIR_DEST/bkp_$DATA.bzip2 /usr
+
+		echo
+		echo
+
+		echo "Backup Realizado!"
+		sleep 3
+
+		echo
+		echo
+		
+		echo "Verifique o $DIR_DEST/bkp_$DATA.bzip2"
+		sleep 7
+		;;
+
+		
+		3)
+
+		
+		
+		tar -Jcvf $DIR_DEST/bkp_$DATA.xz /usr
+
+		echo
+		echo
+
+		echo "Backup Realizado!"
+		sleep 3
+		echo
+		echo
+
+		echo "Verifique o $DIR_DEST/bkp_$DATA.xz"
+		sleep 7
+		;;
+
+	esac
+
+	;;
+
+
+	5) 
+
+	
+	echo
+	echo
+	echo "		Qual diretório deseja fazer o backup?"
+	echo "		Informe o caminho absoluto (Ex: /home/nasser)"
+
+	read CAMINHO_DIR
+
+	echo "Selecione o compactador: "
+	
+	echo 
+	
+	echo "1 - gz"
+	echo "2 - bzip2"
+	echo "3 - xz"	
+	
+	echo
+
+	read OP_COMP
+
+			# INÍCIO DO CASE OP_COMP
+				case $OP_COMP in
+
+			1)
+
+			
+		
+			tar -zcvf $DIR_DEST/bkp_$DATA.gz $CAMINHO_DIR
+
+			echo
+			echo
+
+			echo "Backup Realizado!"
+			sleep 3
+			echo
+			echo
+
+			echo "Verifique o $DIR_DEST/bkp_$DATA.gz"
+			sleep 7
+			;;
+
+
+			2)
+
+			
+		
+			tar -jcvf $DIR_DEST/bkp_$DATA.bzip2 $CAMINHO_DIR
+
+			echo
+			echo
+
+			echo "Backup Realizado!"
+			sleep 3
+			echo
+			echo
+			
+			echo "Verifique o $DIR_DEST/bkp_$DATA.bzip2"
+			sleep 7
+			;;
+
+		
+			3)
+
+		   		
+			tar -Jcvf $DIR_DEST/bkp_$DATA.xz $CAMINHO_DIR
+
+			echo
+			echo
+
+			echo "Backup Realizado!"
+			sleep 3
+			echo
+			echo
+
+			echo "Verifique o $DIR_DEST/bkp_$DATA.xz"
+			sleep 7
+			echo
+			echo
+
+			
+			;;
+	
+			esac
+
+	;;
+
+
+
+	
+
+
+esac ### >>> 1
+
+
+
+
+
+
+
+
+
+
+done
