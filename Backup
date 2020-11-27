@@ -3,7 +3,6 @@ while :;
 do
 
 
-
 clear
 # Script de backup
 
@@ -14,6 +13,8 @@ DATA=$(date +%Y%m%d)
 ######################################################### FUNÇÕES
 
 function INFO {
+echo "Verificando o tamanho dos principais diretórios."
+echo
 
 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tTamanho de cada diretório:"
 echo
