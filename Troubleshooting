@@ -236,6 +236,7 @@ case $OP in
 
 		   echo ""
 		   watch -n1 netstat -i
+		   clear
 		   ;;
 
 		4) clear
@@ -253,7 +254,7 @@ case $OP in
 
 		   lsof -i :$PORTA
 		   read
-
+		   clear
 		
 		   ;;
 
@@ -262,6 +263,8 @@ case $OP in
 		   FUNCAOINFOR
 
 		   watch netstat --inet -tunp
+		   clear
+
 		   ;;
 
 		6) clear
@@ -269,6 +272,8 @@ case $OP in
 		   FUNCAOINFOR
 
 		   watch netstat --inet -ntupl
+		   
+		   clear
 		   ;;
 
 		7) clear
@@ -291,6 +296,7 @@ case $OP in
 
 		   	 read -p "Digite a Rede que deseja analisar (DIGITE O IP E MÁSCARA, EX: 192.168.0.0/24): " REDESCAN
 		   	 tcpdump -n net $REDESCAN
+		   	 clear
 
 		   	elif [ $RESPOSTA = "2" ]; then
 
@@ -403,6 +409,7 @@ case $OP in
 			   echo "deseja ver mais informações?(S/n)"
 		   	   echo
 		   	   read RW
+		   	   clear
 
 		   	   if [ $RW = S ]; 
 		   	   then
@@ -431,12 +438,14 @@ case $OP in
 							clear
 							grep -e "ssid=*" --color=always -e "psk=" /etc/NetworkManager/system-connections/* | cut -d: -f2
 							read
+							clear
 						 	;;
 
 						2)	
 							clear
 							iwlist wlp2s0 scanning | grep -A11 Cell
 		   	  	   	  		read
+		   	  	   	  		clear
 		   	  				;;	
 		   
 		   	  			esac
@@ -483,11 +492,13 @@ case $OP4 in
 	1) clear
 	
 		watch -n1 free -h
+		clear
 		;;
 
 	2) clear
 
 		watch sar -uh 1 1
+		clear
 		;;
 
 	3) clear
@@ -520,6 +531,7 @@ case $OP4 in
 		    	echo 
 		    	echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
 		    	read
+		    	clear
 
 				
 		elif [ $OP5 = 3 ];
@@ -540,6 +552,7 @@ case $OP4 in
 		    	 echo 
 		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
 		    	 read
+		    	 clear
 		
 		elif [ $OP5 = 4 ];
 		    then
@@ -551,7 +564,8 @@ case $OP4 in
 				 		
 				 clear
 				 htop -u $NOMEUSER
-		    	 
+		    	 clear
+
 		elif [ $OP5 = 5 ];
 		    then
 		    	 clear
@@ -625,6 +639,7 @@ case $OP4 in
 		    	 echo 
 		    	 echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPressione CTRL + C para SAIR"	    	 
 		    	 read
+		    	 clear
 
 		fi
 		;;
