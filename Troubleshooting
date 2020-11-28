@@ -443,7 +443,7 @@ case $OP in
 
 						2)	
 							clear
-							iwlist wlp2s0 scanning | grep -A11 Cell
+							iw list wlp2s0 scanning | grep -A11 Cell
 		   	  	   	  		read
 		   	  	   	  		clear
 		   	  				;;	
