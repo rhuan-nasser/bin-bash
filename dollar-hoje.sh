@@ -1,6 +1,8 @@
 #!/bin/bash
 
 clear
+while :
+do
 
 arqtemp=$(mktemp)
 
@@ -12,12 +14,10 @@ comando=$(cat "$arqtemp" | grep taxa-comercial| awk '{print $3}' | tr -d '[a-z]'
 #grep taxa-comercial dolar-hoje | awk '{print $3}' | tr -d '[a-z]' | tr -d = | tr -d \"
 
 
-while :
-do
  
 	date=$(date "+%d/%m/%y %H:%M")
-	echo "$date --------------- \$$comando" | tee -a /home/nasser/Desktop/valor-do-dolar 
-	sleep 60
+	echo "$date --------------- \$$comando" | tee -a /home/nasser/valor-do-dolar 
+	sleep 30
 
 done
 
