@@ -39,6 +39,7 @@ Prezados,
 
         O servidor está tendo consumo de $(echo 100-$ociosidade | bc)% do Processador.
 msg
+
 			count=0
 			break
 		fi
