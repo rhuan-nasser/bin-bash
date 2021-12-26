@@ -12,32 +12,39 @@ count=0
 
 while :
 do
-        col_info
+	col_info
+	
+	while [ $ociosidade -le 10 ]
+	do
+		col_info
+		if [ $count == 0 ]
+		then
+			count=$((count+1))
 
-        while [ $ociosidade -le 10 ]
-        do
-                col_info
-                if [ $count == 0 ]
-                then
-                        
-                        count=$((count+1))
+		 	mail -a "Content-Type: text/plain; charset=UTF-8" -s "Consumo de CPU" (Coloque o e-mail aqui sem os "()"!)<<msg
+Prezados,  
 
-                mail -a "Content-Type: text/plain; charset=UTF-8" -s "Consumo de CPU" email<<msg
-Prezados,
-    O servidor está tendo consumo de $(echo 100-$ociosidade | bc)% do Processador.
-no servidor xpto.
-msg            
-                fi
+	O servidor está tendo consumo de $(echo 100-$ociosidade | bc)% do Processador.
 
-                if [ $ociosidade -gt 30 ]
-                then
-                        echo "consumo de cpu estabilizado. No momento o consumo é de $(echo 100-$ociosidade | bc)%"
-                        count=0
-                        break
-                fi
+TOP 10 Processos que estão consumindo mais CPU:
 
-        done
+$(top -b | head -17 | tail -11)
+msg
+		fi
 
+		if [ $ociosidade -gt 30 ]
+		then
+			mail -a "Content-Type: text/plain; charset=UTF-8" -s "Consumo de CPU" (Coloque o e-mail aqui sem os "()"!)<<msg
+Prezados,  
 
+        O servidor está tendo consumo de $(echo 100-$ociosidade | bc)% do Processador.
+msg
+			count=0
+			break
+		fi
+
+	done
+
+	
 
 done
