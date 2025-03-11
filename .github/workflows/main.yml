@@ -1,0 +1,15 @@
+name: Workflow Disparado por Repositório A
+
+on:
+  repository_dispatch:
+    types: [trigger-pipeline]  # Esse é o nome do evento que você usou no repositório A
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v2
+        
+      - name: Executar um comando no repositório de destino
+        run: echo "Workflow disparado com sucesso!"
