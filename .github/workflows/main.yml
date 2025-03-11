@@ -2,7 +2,7 @@ name: Workflow Disparado por Repositório A
 
 on:
   repository_dispatch:
-    types: [trigger-pipeline]  # Esse é o nome do evento que você usou no repositório A
+    types: [trigger-pipeline]  # Nome do evento no POST
 
 jobs:
   build:
